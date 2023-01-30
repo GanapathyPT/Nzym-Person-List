@@ -47,8 +47,13 @@ function App() {
                 <p>
                   City: {row.address.city}, {row.address.country}
                 </p>
-
-                <p>Zip Code: {row.address.zipCode}</p>
+                <p>Zip Code: {row.address.zipcode}</p>
+                <p>
+                  Website: <a href={row.website}>{row.website}</a>
+                </p>
+                <p>
+                  Email: <a href={`mailto:${row.email}`}>{row.email}</a>
+                </p>
               </address>
             </div>
           ),

@@ -7,9 +7,9 @@ export interface Address {
   streetName: string;
   buildingNumber: string;
   city: string;
-  zipCode: string;
+  zipcode: string;
   country: string;
-  country_code: string;
+  county_code: string;
   latitude: number;
   longitude: number;
 }
