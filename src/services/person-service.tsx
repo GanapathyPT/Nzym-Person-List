@@ -88,6 +88,14 @@ export const PersonColumn: Column<Person>[] = [
   },
 ];
 
-export async function getAllPersons(): Promise<Person[]> {
-  return (await api.get<{ data: Person[] }>(`/persons`)).data.data;
+export async function getAllPersons(numRows = 10): Promise<Person[]> {
+  const query = {
+    _quantity: numRows,
+  };
+
+  return (
+    await api.get<{ data: Person[] }>(`/persons`, {
+      params: query,
+    })
+  ).data.data;
 }

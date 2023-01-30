@@ -10,6 +10,21 @@
   padding: 0 5rem;
 }
 
+.rows__selector {
+  display: flex;
+  background-color: #fff;
+  border: 0.1em solid #fafafa;
+  padding: 0 1em;
+  justify-content: space-between;
+
+  select {
+    padding: 0 2em;
+    border: none;
+    background-color: transparent;
+    font-size: 1.08rem;
+  }
+}
+
 .cell__center {
   text-align: center;
 }

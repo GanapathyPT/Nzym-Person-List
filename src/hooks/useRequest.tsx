@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
-export function useRequest<T>(requestFn: () => Promise<T>) {
+export function useRequest<T>(
+  requestFn: () => Promise<T>,
+  dependency: any[] = []
+) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -24,7 +27,7 @@ export function useRequest<T>(requestFn: () => Promise<T>) {
       setData(null);
       setError(null);
     };
-  }, []);
+  }, dependency);
 
   return { loading, data, error };
 }
