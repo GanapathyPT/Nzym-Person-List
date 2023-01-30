@@ -1,15 +1,29 @@
+.container {
+  width: 100%;
+  position: relative;
+}
+
 .table {
   width: 100%;
   border-color: #f0f0f0;
   border-collapse: collapse;
-  position: relative;
 
   thead {
     tr {
       th {
         padding: 1rem;
-        text-align: left;
         background-color: #fafafa;
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          svg {
+            color: var(--primary-color);
+            cursor: pointer;
+          }
+        }
       }
     }
   }

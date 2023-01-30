@@ -7,6 +7,7 @@ function App() {
 
   return (
     <div className="container">
+      <h1>Person List</h1>
       <Table<Person>
         loading={loading}
         columns={PersonColumn}

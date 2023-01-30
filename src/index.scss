@@ -3,14 +3,20 @@
   padding: 0;
   box-sizing: border-box;
   background-color: #f0f3f6;
+  --primary-color: #1e88e5;
 }
 
 .container {
-  padding: 0 1rem;
+  padding: 0 5rem;
+}
+
+.cell__center {
+  text-align: center;
 }
 
 .person__avatar {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
+  object-fit: cover;
 }
