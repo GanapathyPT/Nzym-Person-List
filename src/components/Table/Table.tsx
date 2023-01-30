@@ -17,25 +17,43 @@ export interface Column<T> {
   sorter?: (a: T, b: T) => number;
 }
 
+interface Row<T> {
+  data: T;
+  expanded: boolean;
+}
+
 interface Props<T> {
   loading?: boolean;
   columns: Column<T>[];
+  expandRow?: {
+    render: (data: T) => ReactNode;
+    condition: (data: T) => boolean;
+  };
   data: T[];
 }
 
-function Table<T>({ columns, data, loading }: Props<T>) {
-  const [tableData, setTableData] = useState(data);
+function Table<T>({ columns, data, loading, expandRow }: Props<T>) {
+  const [tableData, setTableData] = useState<Row<T>[]>(
+    data.map((item) => ({
+      data: item,
+      expanded: false,
+    }))
+  );
   const [sortedColumn, setSortedColumn] = useState({
     key: "",
     order: "asc",
   });
 
   useEffect(() => {
-    setTableData(data);
+    setTableData(
+      data.map((item) => ({
+        data: item,
+        expanded: false,
+      }))
+    );
   }, [data]);
 
   const sortData = (column: Column<T>) => {
-    console.log("SORT");
     if (sortedColumn?.key === column.key) {
       setTableData([...tableData].reverse());
       setSortedColumn((old) => ({
@@ -45,7 +63,9 @@ function Table<T>({ columns, data, loading }: Props<T>) {
       return;
     }
 
-    const sortedData = [...tableData].sort(column.sorter);
+    const sortedData = [...tableData].sort((a, b) =>
+      (column.sorter as any)(a.data, b.data)
+    );
     setTableData(sortedData);
     setSortedColumn({
       key: column.key,
@@ -65,6 +85,24 @@ function Table<T>({ columns, data, loading }: Props<T>) {
     return <IoChevronUpCircleOutline onClick={() => sortData(column)} />;
   };
 
+  const onExpand = (row: T) => {
+    if (!expandRow) return;
+
+    if (expandRow.condition(row)) {
+      setTableData((old) =>
+        old.map((item) =>
+          item.data === row
+            ? {
+                ...item,
+                expanded: !item.expanded,
+              }
+            : item
+        )
+      );
+      return;
+    }
+  };
+
   return (
     <div className={styles.container}>
       <table border={1} className={styles.table}>
@@ -81,14 +119,21 @@ function Table<T>({ columns, data, loading }: Props<T>) {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((item: any) => (
-            <tr key={item.key}>
-              {columns.map(({ key, dataIndex, render, className }) => (
-                <td key={key} className={className}>
-                  {render ? render(item) : item[dataIndex]}
-                </td>
-              ))}
-            </tr>
+          {tableData.map(({ data: item, expanded }: Row<any>) => (
+            <>
+              <tr key={item.key} tabIndex={1} onClick={() => onExpand(item)}>
+                {columns.map(({ key, dataIndex, render, className }) => (
+                  <td key={key} className={className}>
+                    {render ? render(item) : item[dataIndex]}
+                  </td>
+                ))}
+              </tr>
+              {expanded && (
+                <tr className={styles.expandedRow}>
+                  <td colSpan={columns.length}>{expandRow?.render(item)}</td>
+                </tr>
+              )}
+            </>
           ))}
         </tbody>
       </table>

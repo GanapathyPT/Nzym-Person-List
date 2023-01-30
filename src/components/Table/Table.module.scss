@@ -34,6 +34,19 @@
       td {
         padding: 1rem;
       }
+
+      &:hover {
+        cursor: pointer;
+        background-color: #fafafa;
+      }
     }
+  }
+}
+
+.expandedRow {
+  background-color: #fafafa;
+
+  td {
+    padding-left: 3rem !important;
   }
 }

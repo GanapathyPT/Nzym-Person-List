@@ -35,6 +35,24 @@ function App() {
         loading={loading}
         columns={PersonColumn}
         data={data || []}
+        expandRow={{
+          condition: (row) => true,
+          render: (row) => (
+            <div>
+              <address>
+                <p>No: {row.address.buildingNumber}</p>
+                <p>
+                  Street: {row.address.street}, {row.address.streetName}
+                </p>
+                <p>
+                  City: {row.address.city}, {row.address.country}
+                </p>
+
+                <p>Zip Code: {row.address.zipCode}</p>
+              </address>
+            </div>
+          ),
+        }}
       />
     </div>
   );
