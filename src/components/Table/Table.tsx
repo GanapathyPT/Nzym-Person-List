@@ -138,7 +138,7 @@ function Table<T>({ columns, data, loading, expandRow }: Props<T>) {
         </tbody>
       </table>
       <Loader open={loading} />
-      <Empty show={data.length === 0} />
+      <Empty message="No Content" show={data.length === 0} />
     </div>
   );
 }
