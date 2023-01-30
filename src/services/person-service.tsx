@@ -37,7 +37,9 @@ export const PersonColumn: Column[] = [
     key: "avatar",
     title: "Avatar",
     dataIndex: "image",
-    render: (item: Person) => <img src={item.image} />,
+    render: (item: Person) => (
+      <img className="person__avatar" src={item.image} />
+    ),
   },
 
   {
